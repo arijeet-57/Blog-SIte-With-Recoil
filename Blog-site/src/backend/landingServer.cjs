@@ -14,7 +14,7 @@ app.post("/register", async function(req, res) {
     try {
         const existingUser = await User.findOne({username, password});
         if (existingUser) {
-            res.status(409).json({
+          return  res.status(409).json({
                 msg: "User already exists...Try Logging in"
             })
         };
@@ -40,7 +40,7 @@ app.post("/login", async function(req, res) {
     try {
         const existingUser = await User.findOne({username, password});
         if (!existingUser) {
-            res.status(409).json({
+          return res.status(409).json({
                 msg: "User does not exists...Enter valid credentials"
             })
         };
