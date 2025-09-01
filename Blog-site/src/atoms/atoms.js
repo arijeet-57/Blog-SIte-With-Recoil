@@ -6,4 +6,9 @@ export const userAtom = atom({
         username: "",
         password: ""
     }
-})
+});
+
+export const blogAtom = atom({
+    key: "blogAtom",
+    default: []
+});

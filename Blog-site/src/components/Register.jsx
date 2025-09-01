@@ -23,7 +23,7 @@ export function RegisterPage() {
             const data = await res.json();
 
             if(res.ok) {
-                setUser({username: data.username, password: data.password});
+                setUser({username: data.username});
 
                 navigate("/Login");
             }else{

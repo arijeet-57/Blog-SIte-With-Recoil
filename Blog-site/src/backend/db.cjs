@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { Schema } = require("zod");
+const { Schema, date } = require("zod");
 
 mongoose.connect("mongodb://localhost:27017/blog-site-recoil");
 
@@ -11,7 +11,8 @@ const userSchema = new mongoose.Schema({
 const blogSchema = new mongoose.Schema({
     username : {type: String, ref: "User"},
     title : String,
-    description : String
+    description : String,
+    date: {type: Date, default: Date.now}
 });
 
 const User = mongoose.model("User", userSchema);

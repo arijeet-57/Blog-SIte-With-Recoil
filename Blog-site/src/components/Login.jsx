@@ -25,9 +25,9 @@ export function LoginPage() {
             if(res.ok) {
                 setUser({username: data.username , password: data.password});
 
-                localStorage.setItem("username", data.username)
+                localStorage.setItem("username", data.username) //THis will only store the username if the backend sends it so be careful
 
-                navigate("/Home");
+                navigate("/WriteBlog");
             }else{
                 alert(data.msg || "Login failed");
             };

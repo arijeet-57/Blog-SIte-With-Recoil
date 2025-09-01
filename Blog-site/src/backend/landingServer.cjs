@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require("cors");
-const { User } = require("./db.cjs");
+const { User, Blogs } = require("./db.cjs");
+const { date } = require("zod/v4");
+const moment = require("moment-timezone");
 
 const app = express();
 
@@ -43,9 +45,10 @@ app.post("/login", async function(req, res) {
           return res.status(409).json({
                 msg: "User does not exists...Enter valid credentials"
             })
-        };
+        }
         res.json({
-            msg: "User logged in..."
+            msg: "User logged in...",
+            username: existingUser.username //sending the usrname in the response so that the frontend can store it in the local storage
         });
     }catch(err){
         res.status(404).json({
@@ -53,6 +56,26 @@ app.post("/login", async function(req, res) {
         })
     }
 });
+
+
+
+//route for posting the blog    
+app.post("/write", async function(req, res) {
+    const {title, description} = req.body;
+    const isNow = moment.tz("Asia/Kolkata").format("YYYY-MM-DD");
+
+    if(!title || !description) {
+        res.json({
+            msg: "Fields cannot be empty..."
+        })
+    }else{
+    const newBlog = new Blogs({title, description, date: isNow});
+    await newBlog.save();
+    res.json({
+            msg: "Entry done"
+        })
+    }
+}) ;
 
 
 app.listen(4000, () => {
